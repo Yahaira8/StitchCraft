@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
   CheckCircle2,
@@ -18,12 +16,9 @@ import {
   BookOpen,
 } from 'lucide-react';
 import { SEED_PATTERNS } from '../lib/seedData';
-import { Pattern } from '../types';
-import { PatternPreviewModal } from '../components/PatternPreviewModal';
+import { PatternCard } from '../components/PatternCard';
 
 export default function HomePage() {
-  const [activePatternPreview, setActivePatternPreview] = useState<Pattern | null>(null);
-
   const phase1Deliverables = [
     {
       title: 'PostgreSQL DDL Migration Script',
@@ -88,14 +83,14 @@ export default function HomePage() {
           </p>
 
           <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-            <button
-              onClick={() => setActivePatternPreview(SEED_PATTERNS[0])}
+            <a
+              href="#patterns-section"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[var(--color-accent)] text-white text-xs font-semibold hover:opacity-90 transition-opacity shadow-sm"
             >
               <BookOpen className="w-4 h-4" />
-              <span>Preview Written Pattern & Video</span>
+              <span>Explore Patterns & Video Tutorials</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </a>
 
             <Link
               href="/calculator"
@@ -151,88 +146,30 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* 8 Production Seed Patterns Preview */}
-        <div>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between pb-4 border-b border-[var(--border-color)] mb-6 gap-2">
+        {/* 8 Production Seed Patterns with Video Player & Written Pattern Underneath */}
+        <div id="patterns-section">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between pb-4 border-b border-[var(--border-color)] mb-8 gap-2">
             <div>
               <div className="flex items-center gap-2 text-xs font-semibold text-[var(--color-secondary)] uppercase tracking-wider">
                 <Video className="w-4 h-4" />
-                <span>Verified Video Tutorial & Written Pattern Database</span>
+                <span>Verified Video Player & Written Pattern Underneath</span>
               </div>
               <h3 className="text-2xl font-serif font-bold text-[var(--text-primary)] mt-1">
                 8 Amigurumi Seed Patterns
               </h3>
             </div>
-            <p className="text-xs text-[var(--text-primary)]/70">
-              Click any pattern card to view its written round-by-round stitches and embedded video player side-by-side.
+            <p className="text-xs text-[var(--text-primary)]/70 max-w-md">
+              Click the video player to watch the walkthrough, and follow the exact written round-by-round stitches displayed directly underneath each video.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {SEED_PATTERNS.map((pattern) => (
-              <div
-                key={pattern.id}
-                onClick={() => setActivePatternPreview(pattern)}
-                className="group rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] overflow-hidden hover:border-[var(--color-accent)] transition-all shadow-xs flex flex-col cursor-pointer"
-              >
-                <div className="relative aspect-video bg-black/10 overflow-hidden">
-                  <img
-                    src={pattern.image_urls[0]}
-                    alt={pattern.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-2 right-2 px-2 py-0.5 rounded bg-black/75 text-white text-[10px] font-bold">
-                    {pattern.difficulty}
-                  </div>
-                </div>
-
-                <div className="p-4 flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[11px] text-[var(--color-secondary)] font-medium">
-                      {pattern.category}
-                    </span>
-                    <h4 className="text-sm font-semibold font-serif text-[var(--text-primary)] mt-0.5 line-clamp-1 group-hover:text-[var(--color-accent)] transition-colors">
-                      {pattern.title}
-                    </h4>
-
-                    <div className="mt-3 pt-2 border-t border-[var(--border-color)]/60 text-[11px] text-[var(--text-primary)]/75 space-y-1">
-                      <div className="flex justify-between">
-                        <span>Hook:</span>
-                        <span className="font-mono font-medium">{pattern.recommended_hook}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Safety Eyes:</span>
-                        <span className="font-mono font-medium">{pattern.recommended_eye_size}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Yarn:</span>
-                        <span className="font-mono font-medium truncate ml-2">{pattern.yarn_weight}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-[var(--border-color)]/60 flex items-center justify-between text-xs">
-                    <span className="text-[11px] text-[var(--text-primary)]/60 font-medium">
-                      {Object.keys(pattern.instructions).length} Parts
-                    </span>
-                    <span className="inline-flex items-center gap-1 text-[var(--color-accent)] font-semibold text-[11px] group-hover:translate-x-0.5 transition-transform">
-                      <span>Written & Video</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <PatternCard key={pattern.id} pattern={pattern} />
             ))}
           </div>
         </div>
       </div>
-
-      {/* Pattern Preview Modal (Written Pattern + Video Player) */}
-      <PatternPreviewModal
-        pattern={activePatternPreview}
-        onClose={() => setActivePatternPreview(null)}
-      />
     </div>
   );
 }
