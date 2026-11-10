@@ -1,0 +1,8 @@
+{
+  "name": "StitchCraft — Modern Crochet Studio",
+  "description": "An artisanal crochet web platform featuring curated designer patterns, complete maker kits, interactive row & stitch counters, yarn gauge calculator, and stitch tutorial library.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
