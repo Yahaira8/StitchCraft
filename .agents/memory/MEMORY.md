@@ -1,0 +1,1 @@
+- [Preview build constraints](preview-build-constraints.md) — constrain Tailwind scanning and use exact Replit development origins for Next.js previews.
